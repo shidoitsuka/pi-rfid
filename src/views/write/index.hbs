@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <style media="screen">
+    .card {
+      padding-bottom: 5vh;
+      margin: 0 auto;
+      max-width: 75vw;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <div class="row card">
+      <div class="col s12">
+        <form action="/write" method="post">
+          <div class="input-field col s12">
+            <i class="material-icons prefix">clear_all</i>
+            <input id="Level" type="number" name="level" min="1" max="5" class="validate">
+            <label for="Level">Level</label>
+          </div>
+          <div class="input-field col s12">
+            <i class="material-icons prefix">perm_identity</i>
+            <input id="NIS" type="text" name="nis" class="validate">
+            <label for="NIS">NIS</label>
+          </div>
+          <div class="input-field col s12">
+            <i class="material-icons prefix">attach_money</i>
+            <input id="Uang" type="number" name="money" class="validate">
+            <label for="Uang">Uang</label>
+          </div>
+          <input type="submit" value="write" class="btn col s4 offset-s8" />
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+</body>
+
+</html>

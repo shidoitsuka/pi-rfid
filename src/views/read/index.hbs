@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <style media="screen">
+    .card {
+      padding-bottom: 3vh;
+      margin: 0 auto;
+      max-width: 75vw;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <div class="row card">
+      <div class="col s12 center-align">
+        <form action="/read" method="post">
+          <img src="https://i.ibb.co/9pJRVvL/rfid-icon.png" />
+      </div>
+      <div class="col s12 center-align">
+        <h4>Klik tombol di bawah lalu tempelkan kartu anda.</h4>
+        <input type="submit" value="read" class="btn col s4 offset-s4" />
+      </div>
+      </form>
+    </div>
+  </div>
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+</body>
+
+</html>
