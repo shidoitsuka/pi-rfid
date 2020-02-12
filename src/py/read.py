@@ -5,9 +5,9 @@ import ast
 from mfrc522 import SimpleMFRC522
 
 reader = SimpleMFRC522()
+print('Tempelkan RFID anda')
 
 try:
-        print('Tempelkan RFID anda')
         id, data = reader.read()
         output = ast.literal_eval(data)
         print(id)

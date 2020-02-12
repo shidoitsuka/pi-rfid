@@ -2,23 +2,21 @@
 
 import RPi.GPIO as GPIO
 from mfrc522 import SimpleMFRC522
+import sys, json, ast
 
 reader = SimpleMFRC522()
 
 try:
-    print('Tempelkan RFID anda')
-    id, data = reader.read()
-    card_data = ast.literal_eval(data)
-    nis = flask.request.form.get("nis")
-    lvl = flask.request.form.get("level")
-    uang = flask.request.form.get("money")
+    print("Tempelkan RFID Anda")
+    lvl = sys.argv[1]
+    nis = sys.argv[2]
+    uang = sys.argv[3]
     data = {
-        "n": nis,
         "l": lvl,
+        "n": nis,
         "m": uang
     }
     reader.write(str(data))
-    return "BERHASIL!"
+    print("Berhasil!")
 finally:
     GPIO.cleanup()
-
