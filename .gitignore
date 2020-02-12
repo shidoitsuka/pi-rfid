@@ -2,3 +2,5 @@ package-lock*
 node_modules/
 *.old
 .idea
+x.js
+x.py
