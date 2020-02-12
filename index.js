@@ -59,15 +59,16 @@ app.post("/write", (req, res) => {
 });
 
 // write to RFID form
-app.post("/read", (req, res) => {
+app.post("/read", (req, res, next) => {
+let data;
     const py = new PythonShell('./src/py/read.py');
     py.on('message', function(m) {
-        console.log(m);
+	data = m;
     });
     py.end(e => {
         if (e) throw e;
-        console.log("finished");
-    })
+	res.render('read/output', { output: JSON.parse(data) });
+    });
 });
 
 app.listen(3000, console.log("3000"));
