@@ -48,23 +48,25 @@ app.post("/buy", (req, res) => {});
 // write to RFID
 app.post("/write", (req, res) => {
   const cmd = require("node-cmd");
-  // prettier-ignore
-  cmd.get(`python3 src/py/write.py ${req.body.level} ${req.body.nis} ${req.body.money}`, (data, err, stderr) => {
-      if (!err) console.log(data);
-      else console.log(err);
-    });
+  cmd.get(
+    `python3 src/py/write.py ${req.body.level} ${req.body.nis} ${req.body.money}`,
+    (data, err, stderr) => {
+      if (!err) res.render("write/failed", { error: err });
+      else res.render("write/success");
+    }
+  );
 });
 
 // write to RFID form
 app.post("/read", (req, res, next) => {
   let data;
   const py = new PythonShell("./src/py/read.py");
-  py.on("message", m => {
+  py.on("message", function(m) {
     data = m;
   });
   py.end(e => {
     if (e) throw e;
-    res.render("read/output", { output: JSON.parse(data) });
+    res.render("read/output", { output: JSON.parse(data.replace(/'/g, '"')) });
   });
 });
 
