@@ -65,8 +65,10 @@ let data;
     py.on('message', function(m) {
 	data = m;
     });
-    py.end(e => {
-        if (e) throw e;
+    py.end((err, code, signal) => {
+	console.log(signal)
+        console.log(code)
+	if (err) throw err;
 	res.render('read/output', { output: JSON.parse(data.replace(/'/g, '"')) });
     });
 });
