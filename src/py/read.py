@@ -8,7 +8,10 @@ reader = SimpleMFRC522()
 
 try:
         id, data = reader.read()
-        output = ast.literal_eval(data)
-        print(output)
+        try:
+            output = ast.literal_eval(data)
+            print(output)
+        except:
+            print("0")
 finally:
         GPIO.cleanup()

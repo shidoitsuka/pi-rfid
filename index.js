@@ -55,17 +55,17 @@ app.post("/write", (req, res) => {
   });
 });
 
-// write to RFID form
-app.post("/read", (req, res, next) => {
+// read RFID data
+app.post("/read", (req, res) => {
   let data;
   const py = new PythonShell("./src/py/read.py");
   py.on("message", function(m) {
     data = m;
   });
-  py.end(e => {
-    if (e) throw e;
+  py.end(err => {
+    if (err) res.render("error", { error: err });
     res.render("read/output", { output: JSON.parse(data.replace(/'/g, '"')) });
   });
 });
 
-app.listen(3000, console.log("3000"));
+app.listen(3000, "172.16.7.53", console.log("3000"));
