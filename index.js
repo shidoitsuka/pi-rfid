@@ -39,7 +39,7 @@ app.get("/read", (req, res) => {
 /* server side processes */
 // user sign in process
 app.post("/login", (req, res) => {
-  console.log(req);
+  const { username, password } = req.body;
 });
 
 // buy process
