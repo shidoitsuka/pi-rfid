@@ -4,3 +4,5 @@ node_modules/
 .idea
 x.js
 x.py
+data/
+config.js
