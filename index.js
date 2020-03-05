@@ -26,7 +26,7 @@ app.use(bodyParser.urlencoded({
 app.get("/", (req, res) => {
   // parse cookies & get value of "user"
   // prettier-ignore
-  const seller = req.headers.cookie != "" && req.headers.cookie != "undefined" ? req.headers.cookie.split("; ")[0].split("=")[1] : "undefined";
+  const seller = (req.headers.cookie != "" && req.headers.cookie != undefined) ? req.headers.cookie.split("; ")[0].split("=")[1] : "undefined";
   if (seller == "undefined") return res.render(`login/index`);
   res.render("index/index");
 });
@@ -35,7 +35,7 @@ app.get("/", (req, res) => {
 app.get("/login", (req, res) => {
   // parse cookies & get value of "user"
   // prettier-ignore
-  const seller = req.headers.cookie != "" && req.headers.cookie != "undefined" ? req.headers.cookie.split("; ")[0].split("=")[1] : "undefined";
+const seller = (req.headers.cookie != "" && req.headers.cookie != undefined) ? req.headers.cookie.split("; ")[0].split("=")[1] : "undefined";
   if (seller == "undefined") return res.render(`login/index`);
   res.render("index/index", {
     toast: true,
@@ -47,7 +47,7 @@ app.get("/login", (req, res) => {
 app.get("/signup", (req, res) => {
   // parse cookies & get value of "user"
   // prettier-ignore
-  const seller = req.headers.cookie != "" && req.headers.cookie != "undefined" ? req.headers.cookie.split("; ")[0].split("=")[1] : "undefined";
+const seller = (req.headers.cookie != "" && req.headers.cookie != undefined) ? req.headers.cookie.split("; ")[0].split("=")[1] : "undefined";
   // check if "user" is not defined
   if (seller == "undefined") return res.render(`signup/index`);
   // if defined, show message to logout
@@ -76,7 +76,7 @@ app.get("/read", (req, res) => {
 app.get("/master", (req, res) => {
   // parse cookies & get value of "user"
   // prettier-ignore
-  const seller = req.headers.cookie != "" && req.headers.cookie != "undefined" ? req.headers.cookie.split("; ")[0].split("=")[1] : "undefined";
+const seller = (req.headers.cookie != "" && req.headers.cookie != undefined) ? req.headers.cookie.split("; ")[0].split("=")[1] : "undefined";
 
   if (seller == "undefined") return res.render(`login/index`);
   const users = db.indexes;
@@ -219,7 +219,7 @@ app.post("/addItem", (req, res) => {
     itemPrice
   } = req.body;
   // prettier-ignore
-  const seller = req.headers.cookie != "" && req.headers.cookie != "undefined" ? req.headers.cookie.split("; ")[0].split("=")[1] : "undefined";
+const seller = (req.headers.cookie != "" && req.headers.cookie != undefined) ? req.headers.cookie.split("; ")[0].split("=")[1] : "undefined";
   db.set(seller, {
     name: itemName,
     price: itemPrice
@@ -237,7 +237,7 @@ app.post("/editPrice", (req, res) => {
   const itemName = selectedItem.split("-")[0];
   // parse cookies & get value of "user"
   // prettier-ignore
-  const seller = req.headers.cookie != "" && req.headers.cookie != "undefined" ? req.headers.cookie.split("; ")[0].split("=")[1] : "undefined";
+const seller = (req.headers.cookie != "" && req.headers.cookie != undefined) ? req.headers.cookie.split("; ")[0].split("=")[1] : "undefined";
   db.set(seller, newPrice, `barang.${itemName}.price`);
   res.redirect("/master");
 });
