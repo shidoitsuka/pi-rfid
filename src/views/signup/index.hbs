@@ -14,6 +14,10 @@
     .fail {
       background-color: #D04746;
     }
+
+    .success {
+      background-color: #4BB543;
+    }
   </style>
   {{#if toast}}
     <script type="text/javascript">
@@ -29,21 +33,21 @@
 
 <body>
   <div class="container">
-    <h1>Login Akun</h1>
+    <h1>Daftar Akun</h1>
     <div class="row card">
       <div class="col s12 card-content">
-        <form action="/login" method="post">
+        <form action="/signup" method="post">
           <div class="input-field col s12">
             <i class="material-icons prefix">account_box</i>
-            <input id="username" type="text" name="username" placeholder="Username" required />
+            <input type="text" name="username" placeholder="Username" required />
           </div>
           <div class="input-field col s12">
             <i class="material-icons prefix">lock</i>
-            <input id="password" type="password" name="password" placeholder="Password" required />
+            <input type="password" name="password" placeholder="Password" required />
           </div>
       </div>
       <div class="card-action">
-        <input type="submit" value="login" class="btn col s4 offset-s4" />
+        <input type="submit" value="Daftar" class="btn col s4 offset-s4" />
       </div>
       </form>
     </div>

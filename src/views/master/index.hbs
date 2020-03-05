@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <style media="screen">
+    .card {
+      padding-bottom: 3vh;
+    }
+
+    .fail {
+      background-color: #D04746;
+    }
+
+    .success {
+      background-color: #4BB543;
+    }
+
+    .loggedIn {
+      padding-bottom: 1rem;
+    }
+  </style>
+  {{#if toast}}
+    <script type="text/javascript">
+      $(document).ready(function() {
+        M.toast({
+          html: '{{message}}',
+          classes: '{{class}}'
+        });
+      });
+    </script>
+  {{/if}}
+  <script type="text/javascript">
+    $(document).ready(function() {
+      $(".tabs").tabs();
+      $("select").formSelect();
+      $("#editItems").change(function() {
+        $("#priceTag").removeAttr("disabled");
+        $("#priceTag").val($("#editItems").val().split("-")[1]);
+      });
+    });
+  </script>
+</head>
+
+<body>
+  <div class="container">
+    <div class="row">
+      <h1 class="col s12">Master Barang</h1>
+      <h6 class="col s6">Masuk sebagai : {{seller}}</h6>
+      <h6 class="col s6 right-align"><a href="/logout" class="btn waves-effect waves-light">Logout</a></h6>
+    </div>
+    <div class="card row">
+      <div class="col s12">
+        <ul class="tabs">
+          <li class="tab col s4"><a href="#master">Master</a></li>
+          <li class="tab col s4"><a href="#tambah">Tambah Barang</a></li>
+          <li class="tab col s4"><a href="#edit" class="active">Edit Barang</a></li>
+        </ul>
+      </div>
+
+      <!-- master barang -->
+      <div id="master" class="col s12">
+        {{#each barang}}
+          <div class="card col s6">
+            <h4>{{this.name}}</h4>
+          </div>
+        {{/each}}
+      </div>
+
+      <!-- tambah barang -->
+      <div id="tambah" class="col s12">
+        <form action="/addItem" method="post">
+          <div class="input-field col s12">
+            <i class="material-icons prefix">local_offer</i>
+            <input type="text" name="itemName" placeholder="Nama Barang" required />
+          </div>
+          <div class="input-field col s12">
+            <i class="material-icons prefix">money</i>
+            <input type="number" name="itemPrice" placeholder="Harga Satuan" required />
+          </div>
+          <div class="card-action">
+            <input type="submit" value="Tambah Barang" class="btn col s4 offset-s4" />
+          </div>
+        </form>
+      </div>
+
+      <!-- edit barang -->
+      <div id="edit" class="col s12">
+        <form action="/editPrice" method="post">
+          <div class="input-field col s12">
+            <select name="selectedItem" id="editItems">
+              <option value="0" disabled selected>Pilih Barang Anda</option>
+              {{#each barang}}
+                <option value="{{this.name}}-{{this.price}}">{{this.name}}</option>
+              {{/each}}
+            </select>
+            <input type="text" id="priceTag" name="newPrice" placeholder="Harga Barang" oninput="$('#changeBtn').removeClass('disabled');" disabled />
+            <input type="submit" id="changeBtn" class="btn col s2 offset-s5 disabled" value="Ubah" />
+          </div>
+        </form>
+      </div>
+
+      <!-- !card -->
+    </div>
+    <!-- !container -->
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+</body>
+
+</html>
