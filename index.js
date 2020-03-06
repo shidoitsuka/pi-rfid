@@ -2,24 +2,16 @@ const express = require("express");
 const hbs = require("hbs");
 const bodyParser = require("body-parser");
 const path = require("path");
-const {
-  PythonShell
-} = require("python-shell");
+const { PythonShell } = require("python-shell");
 const app = express();
 const Enmap = require("enmap");
-const db = new Enmap({
-  name: "data"
-});
-const {
-  port
-} = require("./config.js");
+const db = new Enmap({ name: "data" });
+const { port } = require("./config.js");
 
 app.set("views", path.join(__dirname, "src/views"));
 app.set("view engine", "hbs");
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({
-  extended: false
-}));
+app.use(bodyParser.urlencoded({ extended: false }));
 
 /* user open the page */
 // index
@@ -35,7 +27,7 @@ app.get("/", (req, res) => {
 app.get("/login", (req, res) => {
   // parse cookies & get value of "user"
   // prettier-ignore
-const seller = (req.headers.cookie != "" && req.headers.cookie != undefined) ? req.headers.cookie.split("; ")[0].split("=")[1] : "undefined";
+  const seller = (req.headers.cookie != "" && req.headers.cookie != undefined) ? req.headers.cookie.split("; ")[0].split("=")[1] : "undefined";
   if (seller == "undefined") return res.render(`login/index`);
   res.render("index/index", {
     toast: true,
@@ -47,7 +39,7 @@ const seller = (req.headers.cookie != "" && req.headers.cookie != undefined) ? r
 app.get("/signup", (req, res) => {
   // parse cookies & get value of "user"
   // prettier-ignore
-const seller = (req.headers.cookie != "" && req.headers.cookie != undefined) ? req.headers.cookie.split("; ")[0].split("=")[1] : "undefined";
+  const seller = (req.headers.cookie != "" && req.headers.cookie != undefined) ? req.headers.cookie.split("; ")[0].split("=")[1] : "undefined";
   // check if "user" is not defined
   if (seller == "undefined") return res.render(`signup/index`);
   // if defined, show message to logout
@@ -76,16 +68,12 @@ app.get("/read", (req, res) => {
 app.get("/master", (req, res) => {
   // parse cookies & get value of "user"
   // prettier-ignore
-const seller = (req.headers.cookie != "" && req.headers.cookie != undefined) ? req.headers.cookie.split("; ")[0].split("=")[1] : "undefined";
+  const seller = (req.headers.cookie != "" && req.headers.cookie != undefined) ? req.headers.cookie.split("; ")[0].split("=")[1] : "undefined";
 
   if (seller == "undefined") return res.render(`login/index`);
   const users = db.indexes;
   const barang = db.get(seller, "barang");
-  res.render(`master/index`, {
-    users,
-    seller,
-    barang
-  });
+  res.render(`master/index`, { users, seller, barang });
 });
 
 // user sign out process
@@ -113,18 +101,12 @@ app.get("/e", (req, res) => {
 // user sign in process
 app.post("/login", (req, res) => {
   // get username and password
-  const {
-    username,
-    password
-  } = req.body;
+  const { username, password } = req.body;
   // check if username doesn't exists or username and password doesn't match
   if (!db.has(username) || db.get(username, "password") != password) {
     // render login form and show notice
-    res.render("login/index", {
-      toast: true,
-      message: "User tidak ada atau sandi salah!",
-      class: "fail"
-    });
+    // prettier-ignore
+    res.render("login/index", { toast: true, message: "User tidak ada atau sandi salah!", class: "fail" });
   } else {
     // if it matched set "user" cookie to username
     res.cookie("user", username);
@@ -136,30 +118,18 @@ app.post("/login", (req, res) => {
 // user sign up process
 app.post("/signup", (req, res) => {
   // get username and password
-  const {
-    username,
-    password
-  } = req.body;
+  const { username, password } = req.body;
   // check if username doesn't exists in db
   if (!db.has(username)) {
     // set a new username and password
-    db.set(username, {
-      password: password,
-      barang: {}
-    });
+    db.set(username, { password: password, barang: {} });
     // re-render sign up and notify user
-    res.render(`signup/index`, {
-      toast: true,
-      message: "Berhasil!",
-      class: "success"
-    });
+    // prettier-ignore
+    res.render(`signup/index`, { toast: true, message: "Berhasil!", class: "success" });
   } else {
     // if existed, notify user
-    res.render(`signup/index`, {
-      toast: true,
-      message: "Sudah Terdaftar!",
-      class: "fail"
-    });
+    // prettier-ignore
+    res.render(`signup/index`, { toast: true, message: "Sudah Terdaftar!", class: "fail" });
   }
 });
 
@@ -170,21 +140,15 @@ app.post("/buy", (req, res) => {});
 app.post("/write", (req, res) => {
   const cmd = require("node-cmd");
   // our data
-  const {
-    level,
-    nis,
-    money
-  } = req.body;
+  const { level, nis, money } = req.body;
   // run write.py script
   // prettier-ignore
   cmd.get(`python3 src/py/write.py ${level} ${nis} ${money}`, (data, err, stderr) => {
-    // if its NOT error, render failed with error code
-    if (!err) res.render("write/failed", {
-      error: err
+      // if its NOT error, render failed with error code
+      if (!err) res.render("write/failed", { error: err });
+      // if its error, render success (idk whats going on)
+      else res.render("write/success");
     });
-    // if its error, render success (idk whats going on)
-    else res.render("write/success");
-  });
 });
 
 // read RFID data
@@ -201,43 +165,31 @@ app.post("/read", (req, res) => {
   // do this when python has finished its job
   py.end(err => {
     // if error, render error with error data
-    if (err) res.render("error", {
-      error: err
-    });
+    if (err) res.render("error", { error: err });
     // else, render card data
     // prettier-ignore
-    else res.render("read/output", {
-      output: JSON.parse(data.replace(/'/g, '"'))
-    });
+    else res.render("read/output", { output: JSON.parse(data.replace(/'/g, '"')) });
   });
 });
 
 // add item to DB
 app.post("/addItem", (req, res) => {
-  const {
-    itemName,
-    itemPrice
-  } = req.body;
+  const { itemName, itemPrice } = req.body;
   // prettier-ignore
-const seller = (req.headers.cookie != "" && req.headers.cookie != undefined) ? req.headers.cookie.split("; ")[0].split("=")[1] : "undefined";
-  db.set(seller, {
-    name: itemName,
-    price: itemPrice
-  }, `barang.${itemName}`);
+  const seller = (req.headers.cookie != "" && req.headers.cookie != undefined) ? req.headers.cookie.split("; ")[0].split("=")[1] : "undefined";
+  // prettier-ignore
+  db.set(seller, { name: itemName, price: itemPrice }, `barang.${itemName}`);
   res.redirect("/master");
 });
 
 // edit item info
 app.post("/editPrice", (req, res) => {
   // get form data
-  const {
-    selectedItem,
-    newPrice
-  } = req.body;
+  const { selectedItem, newPrice } = req.body;
   const itemName = selectedItem.split("-")[0];
   // parse cookies & get value of "user"
   // prettier-ignore
-const seller = (req.headers.cookie != "" && req.headers.cookie != undefined) ? req.headers.cookie.split("; ")[0].split("=")[1] : "undefined";
+  const seller = (req.headers.cookie != "" && req.headers.cookie != undefined) ? req.headers.cookie.split("; ")[0].split("=")[1] : "undefined";
   db.set(seller, newPrice, `barang.${itemName}.price`);
   res.redirect("/master");
 });
