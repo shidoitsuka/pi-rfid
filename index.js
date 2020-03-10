@@ -71,9 +71,19 @@ app.get("/master", (req, res) => {
   const seller = (req.headers.cookie != "" && req.headers.cookie != undefined) ? req.headers.cookie.split("; ")[0].split("=")[1] : "undefined";
 
   if (seller == "undefined") return res.render(`login/index`);
-  const users = db.indexes;
   const barang = db.get(seller, "barang");
-  res.render(`master/index`, { users, seller, barang });
+  res.render(`master/index`, { seller, barang });
+});
+
+// write to RFID form
+app.get("/sell", (req, res) => {
+  // parse cookies & get value of "user"
+  // prettier-ignore
+  const seller = (req.headers.cookie != "" && req.headers.cookie != undefined) ? req.headers.cookie.split("; ")[0].split("=")[1] : "undefined";
+
+  if (seller == "undefined") return res.render(`login/index`);
+  const barang = db.get(seller, "barang");
+  res.render(`sell/index`, { seller, barang });
 });
 
 // user sign out process
@@ -90,7 +100,11 @@ app.get("/e", (req, res) => {
   //   return item.itemName;
   // });
   // console.log(db.get("brian"));
-  console.log(db.deleteAll());
+  let a = db.get("brian", "barang");
+  let b = Object.keys(a);
+  b.forEach((item, i) => {
+    console.log(db.get("brian", `barang.${item}`));
+  });
   res.end();
 });
 // !DUMP
@@ -122,7 +136,7 @@ app.post("/signup", (req, res) => {
   // check if username doesn't exists in db
   if (!db.has(username)) {
     // set a new username and password
-    db.set(username, { password: password, barang: {} });
+    db.set(username, { password: password, totalBarang: 0, barang: {} });
     // re-render sign up and notify user
     // prettier-ignore
     res.render(`signup/index`, { toast: true, message: "Berhasil!", class: "success" });
@@ -178,7 +192,8 @@ app.post("/addItem", (req, res) => {
   // prettier-ignore
   const seller = (req.headers.cookie != "" && req.headers.cookie != undefined) ? req.headers.cookie.split("; ")[0].split("=")[1] : "undefined";
   // prettier-ignore
-  db.set(seller, { name: itemName, price: itemPrice }, `barang.${itemName}`);
+  db.set(seller, { id: db.get(seller, "totalBarang"), name: itemName, price: itemPrice }, `barang.${itemName}`);
+  db.inc(seller, "totalBarang");
   res.redirect("/master");
 });
 
