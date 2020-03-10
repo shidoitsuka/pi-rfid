@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <style media="screen">
+    .card {
+      padding-bottom: 3vh;
+    }
+
+    .fail {
+      background-color: #D04746;
+    }
+
+    .success {
+      background-color: #4BB543;
+    }
+  </style>
+  {{#if toast}}
+    <script type="text/javascript">
+      $(document).ready(function() {
+        M.toast({
+          html: '{{message}}',
+          classes: '{{class}}'
+        });
+      });
+    </script>
+  {{/if}}
+</head>
+
+<body>
+  <div class="container">
+    <div class="row">
+      <h1 class="col s12">Penjualan</h1>
+      <h6 class="col s6">Masuk sebagai : {{seller}}</h6>
+      <h6 class="col s6 right-align"><a href="/logout" class="btn waves-effect waves-light">Logout</a></h6>
+    </div>
+    <div class="row card">
+      <div class="col s12 card-content">
+        <div class="input-field">
+          <i class="material-icons prefix">search</i>
+          <input type="text" id="searchBar" placeholder="Cari..." />
+        </div>
+        <form action="/sell" method="post">
+          <div class="myCard row">
+            {{#each barang}}
+              <div class="col s6">
+                <h5 price="{{ this.price }}">{{ this.id }} - {{ this.name }} - {{ this.price }}</h5>
+                <input type="text" id="total-{{this.name}}" class="col s1" />
+                <a href="#" class="btn-small col s1">+</a>
+              </div>
+            {{/each}}
+          </div>
+      </div>
+      <div class="card-action">
+        <input type="submit" value="Lanjut" class="btn col s4 offset-s4" />
+      </div>
+      </form>
+    </div>
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+</body>
+
+</html>
