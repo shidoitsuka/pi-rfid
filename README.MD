@@ -1,5 +1,8 @@
 # Pi RFID
->A multi-purpose RFID based scanner using raspberry pi
+> A multi-purpose RFID based scanner using raspberry pi
+
+[![forthebadge](https://forthebadge.com/images/badges/built-with-love.svg)](https://forthebadge.com)
+[![forthebadge](https://forthebadge.com/images/badges/made-with-python.svg)](https://forthebadge.com)
 
 #### <u>What is this project all about?</u>
 I started this project for [SMK Krian 1](https://www.github.com/SMK-Krian-1/). The goal was to make an RFID card as student's ID card. The card itself contains student's digital money for transactions, as well as level data to unlock doors in SMK Krian 1.
