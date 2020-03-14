@@ -18,6 +18,11 @@
     .success {
       background-color: #4BB543;
     }
+
+    .myCard {
+      border: 1px solid red;
+      margin: 5px;
+    }
   </style>
   {{#if toast}}
     <script type="text/javascript">
@@ -45,9 +50,9 @@
           <input type="text" id="searchBar" placeholder="Cari..." />
         </div>
         <form action="/sell" method="post">
-          <div class="myCard row">
+          <div class="row">
             {{#each barang}}
-              <div class="col s6">
+              <div class="myCard col s6">
                 <h5 price="{{ this.price }}">{{ this.id }} - {{ this.name }} - {{ this.price }}</h5>
                 <input type="text" id="total-{{this.name}}" class="col s1" />
                 <a href="#" class="btn-small col s1">+</a>
